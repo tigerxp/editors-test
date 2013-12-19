@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WYSIWYG Editors Test</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	<style>
+		.row {
+			padding-top: 20px;
+		}
+		.result {
+			border: 1px solid #c0c0c0;
+			min-height: 50px;
+			overflow: auto;
+			padding: 5px;
+		}
+	</style>
+
+	<script src="tinymce/tinymce.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.0.1/ckeditor.js"></script>
+	<script type="application/javascript">
+		window.onload = function () {
+			tinymce.init({
+				height: 230,
+				selector: '#tiny_area',
+				plugins : "paste"
+			});
+			CKEDITOR.replace('ckeditor_area');
+		};
+	</script>
+
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div id="tinymce">
+					<textarea id="tiny_area">Test for TinyMCE</textarea>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div id="ckeditor">
+					<textarea id="ckeditor_area">Test for CKEditor</textarea>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 text-center">
+				<button id="tiny_submit" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-down"></span> Submit TinyMCE</button>
+			</div>
+			<div class="col-md-6 text-center">
+				<button id="ck_submit" class="btn btn-primary"><span class="glyphicon glyphicon-circle-arrow-down"></span> Submit CKEditor</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<button id="all_submit" class="btn btn-success"><span class="glyphicon glyphicon-circle-arrow-down"></span> Submit Both <span class="glyphicon glyphicon-circle-arrow-down"></span></button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div id="tinymce_result" class="result"></div>
+			</div>
+			<div class="col-md-6">
+				<div id="ckeditor_result" class="result"></div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+	<script>
+		$(function() {
+
+			var update_tiny = function () {
+				var editor_data = tinymce.get('tiny_area').getContent();
+				$('#tinymce_result').html(editor_data);
+			};
+			var update_ck = function () {
+				var editor_data = CKEDITOR.instances.ckeditor_area.getData();
+				$('#ckeditor_result').html(editor_data);
+			};
+
+			$('#tiny_submit').click(update_tiny);
+			$('#ck_submit').click(update_ck);
+
+			$('#all_submit').click(function() {
+				update_tiny();
+				update_ck();
+			});
+
+		});
+	</script>
+</body>
+
+</html>
